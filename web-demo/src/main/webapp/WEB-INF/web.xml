@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+          http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         id="webapp_id" version="3.0">
+  
+  <!-- 字符过滤器 定义 -->
+  <filter>
+      <filter-name>characterEncoding</filter-name>
+      <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+      <!-- 字符过滤器初始化参数 -->
+      <init-param>
+          <!-- 字符集初始化参数 -->
+          <param-name>encoding</param-name>
+          <param-value>UTF-8</param-value>
+      </init-param>
+      <init-param>
+          <!-- 是否强行转化字符集 -->
+          <param-name>forceEncoding</param-name>
+          <param-value>true</param-value>
+      </init-param>
+  </filter>
+  
+  <!-- 过滤器适用范围定义 -->
+  <filter-mapping>
+      <filter-name>characterEncoding</filter-name>
+      <url-pattern>/</url-pattern>
+  </filter-mapping>
+  
+  <!-- spring servlet 配置  容器定义-->
+  <servlet>
+     <!-- 用spring配置 servlet -->
+     <servlet-name>springMVC</servlet-name>
+     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+     
+     <init-param>
+         <!-- 初始化参数配置 -->
+         <param-name>contextConfigLocation</param-name>
+         <!-- 这里的属性值是当前Servlet的初始化配置文件路径.
+              Servlet第一次启动时,就会解析此文件来配置属性 -->
+         <param-value>classpath:*Config.xml</param-value>
+     </init-param>
+     
+     <!-- 指定Servlet的启动时间:不配置此属性则默认为直到Servlet第一次被请求时才启动;
+                     指定了属性,则Servlet会在框架开始运行时同时启动. -->
+     <load-on-startup>1</load-on-startup>
+     
+     <!-- 异步处理支持，这是Servlet3.0才开始有的新特性 -->
+     <async-supported>true</async-supported>
+  </servlet>
+  
+  <!-- servlet的映射信息 servlet容器使用范围 -->
+  <servlet-mapping>
+      <!-- 此处使用上面定义的servlet名称 -->
+      <servlet-name>springMVC</servlet-name>
+      <!-- 指定当前servlet的拦截范围 /*表示拦截所有-->
+      <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 设置会话超时时间 -->
+  <session-config>
+      <session-timeout>15</session-timeout>
+  </session-config>
+  
+  
+  <welcome-file-list>
+      <welcome-file>index.jsp</welcome-file>
+      <welcome-file>modelViewBack.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>

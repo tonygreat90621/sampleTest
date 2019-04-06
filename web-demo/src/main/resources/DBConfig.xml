@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+        xmlns:tx="http://www.springframework.org/schema/tx"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+        http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+       
+       <!-- 参数文件的引入 -->
+       <context:property-placeholder file-encoding="UTF-8" 
+           location="classpath:db.properties"/>
+       
+       <!-- 扫描数据库相关的类 -->
+       <!-- <context:component-scan base-package="cn.com.goolife.db.controller,cn.com.goolife.dao"></context:component-scan> -->
+       
+       <!-- spring 数据库连接,未使用连接池,不推荐 -->
+       <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+           <property name="driverClassName" value="${mysqlDriverClassName}"></property>
+           <property name="url" value="${mysqlUrl}"></property>
+           <property name="username" value="${mysqlUsername}"></property>
+           <property name="password" value="${mysqlPassword}"></property>
+       </bean>
+       
+       
+       <!-- org.springframework.jdbc.core.JdbcTemplate -->
+       <bean class="org.springframework.jdbc.core.JdbcTemplate">
+           <constructor-arg name="dataSource" ref="dataSource"></constructor-arg>
+       </bean>
+       <!-- 数据初始化 -->
+       <!-- <jdbc:initialize-database data-source="dataSource" ignore-failures="DROPS">
+           <jdbc:script encoding="UTF-8" location="" execution="INIT"/>
+       </jdbc:initialize-database> -->
+       
+       <!-- db pool -->
+       
+
+</beans>
